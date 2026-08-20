@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+body {
+  font-family: 'Jost', sans-serif;
+}
+
+.font-display {
+  font-family: 'Playfair Display', serif;
+}
+
+.elegant-photo {
+  filter: sepia(12%) saturate(85%) contrast(1.05) brightness(1.02);
+  transition: transform 0.5s ease;
+}
+
+.elegant-photo:hover {
+  transform: scale(1.03);
+}
+
+.section-divider {
+  height: 60px;
+  margin-top: -60px;
+  position: relative;
+  z-index: 1;
+}
