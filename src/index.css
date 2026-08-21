@@ -6,6 +6,9 @@ body {
 
 .font-display {
   font-family: 'Playfair Display', serif;
+  .font-arabic {
+  font-family: 'Amiri', serif;
+}
 }
 
 .elegant-photo {
@@ -22,4 +25,16 @@ body {
   margin-top: -60px;
   position: relative;
   z-index: 1;
+}
+
+@keyframes digitFlip {
+  0% { transform: translateY(0); opacity: 1; }
+  45% { transform: translateY(-10px); opacity: 0; }
+  55% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.digit-flip {
+  display: inline-block;
+  animation: digitFlip 0.5s ease;
 }

@@ -3,8 +3,12 @@ const weddingData = {
   weddingDate: "2026-12-20T08:00:00",
   defaultGuestLabel: "Tamu Undangan",
 
-  cover: {
-    backgroundImage: "/images/cover1.jpg",
+  
+    cover: {
+    backgroundType: "image", // ganti ke "video" kalau mau pakai video
+    backgroundImage: "images/cover3.png",
+    backgroundVideo: "", // isi link .mp4 kalau backgroundType = "video"
+    preweddingPhoto: "images/4.jpg",
   },
 
   groom: {
@@ -57,6 +61,26 @@ const weddingData = {
     "/images/5.jpg",
     "/images/6.jpg",
   ],
+  
+    // Kosongkan youtubeId jadi "" kalau gak mau ada video di galeri
+  galleryVideo: {
+    youtubeId: "",
+  },
+  
+    // Kosongkan jadi `null` kalau bukan pernikahan Islam / gak mau pakai ayat suci
+  ayatSuci: {
+	title: "The Wedding Of Andi & Siti",
+    arabic: "وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً",
+    translation: "Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa cinta dan kasih sayang.",
+    source: "QS. Ar-Rum: 21",
+  },
+
+  susunanAcara: [
+    { time: "08.00 WITA", title: "Persiapan & Kedatangan Tamu", description: "Pengantin dan keluarga bersiap-siap menyambut tamu undangan." },
+    { time: "10.00 WITA", title: "Akad Nikah", description: "Pembukaan, pembacaan ayat suci, ijab kabul, dan doa." },
+    { time: "11.00 WITA", title: "Resepsi Pernikahan", description: "Sambutan keluarga, hiburan, dan foto bersama." },
+    { time: "14.00 WITA", title: "Acara Selesai", description: "Terima kasih atas kehadiran dan doa restunya." },
+  ],
 
   initialUcapan: [
     { nama: "Budi Santoso", pesan: "Selamat menempuh hidup baru! Semoga sakinah mawaddah warahmah." },
@@ -85,6 +109,9 @@ const weddingData = {
     venue: "Gedung Serbaguna Soppeng",
     address: "Jl. Pahlawan No. 5, Watansoppeng",
     mapsUrl: "https://maps.google.com",
+  },
+    music: {
+    url: "/audio/music.mp3",
   },
 }
 

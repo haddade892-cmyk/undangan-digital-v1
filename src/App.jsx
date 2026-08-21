@@ -1,9 +1,14 @@
-import { useState, useEffect } from 'react'
-import Cover from './components/Cover'
+import { useState, useEffect, useRef } from 'react'
+import CoverClassic from './components/covers/CoverClassic'
+import CoverSplit from './components/covers/CoverSplit'
+import CoverPortrait from './components/covers/CoverPortrait'
 import weddingData from './data/weddingData'
 import themes from './data/themes'
 import Ornament from './components/Ornament'
 import Reveal from './components/Reveal'
+import { supabase } from './lib/supabaseClient'
+import SectionShell from './components/SectionShell'
+import FrameCorners from './components/FrameCorners'
 
 // ============================================
 // THEME SWITCHER (floating, kanan atas)
@@ -24,6 +29,19 @@ function ThemeSwitcher({ current, onChange }) {
         />
       ))}
     </div>
+  )
+}
+
+function MusicToggle({ muted, onToggle }) {
+  return (
+    <button
+      onClick={onToggle}
+      className="fixed bottom-4 right-4 z-50 w-11 h-11 rounded-full flex items-center justify-center shadow-md text-sm"
+      style={{ background: 'var(--color-dark)', color: 'var(--color-on-dark)' }}
+      aria-label={muted ? 'Aktifkan musik' : 'Matikan musik'}
+    >
+      {muted ? '🔇' : '🔊'}
+    </button>
   )
 }
 
@@ -57,21 +75,26 @@ function Countdown() {
   ]
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 bg-[var(--color-bg-alt)] text-[var(--color-text)]">
-            <Reveal className="flex flex-col items-center">
+    <SectionShell base="var(--color-bg-alt)" waveFill="var(--color-bg)">
+      <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Save the date</p>
         <h2 className="font-display text-2xl mb-2">Menuju Hari Bahagia</h2>
         <Ornament />
       </Reveal>
-      <div className="flex gap-4">
-        {units.map((unit) => (
-          <div key={unit.label} className="text-center bg-[var(--color-bg)] rounded-xl px-5 py-4 min-w-[70px]">
-            <div className="font-display text-3xl">{unit.value}</div>
-            <div className="text-[10px] tracking-widest uppercase mt-1 text-[var(--color-text-muted)]">{unit.label}</div>
-          </div>
-        ))}
-      </div>
-    </section>
+
+      <FrameCorners className="mt-6">
+        <div className="flex gap-4">
+          {units.map((unit) => (
+            <div key={unit.label} className="text-center min-w-[60px] overflow-hidden">
+              <span key={unit.value} className="digit-flip font-display text-4xl block">
+                {String(unit.value).padStart(2, '0')}
+              </span>
+              <div className="text-[10px] tracking-widest uppercase mt-1 text-[var(--color-text-muted)]">{unit.label}</div>
+            </div>
+          ))}
+        </div>
+      </FrameCorners>
+    </SectionShell>
   )
 }
 
@@ -82,7 +105,7 @@ function Mempelai() {
   const { groom, bride } = weddingData
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 py-16 bg-[var(--color-bg)] text-[var(--color-text)]">
+	<SectionShell base="var(--color-bg)" waveFill="var(--color-bg-accent)">
             <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Mempelai</p>
         <h2 className="font-display text-2xl mb-2">Dengan Rahmat Allah</h2>
@@ -105,7 +128,7 @@ function Mempelai() {
           <p className="text-sm mt-1">@{bride.instagram}</p>
         </div>
       </div>
-    </section>
+    </SectionShell>
   )
 }
 
@@ -134,7 +157,7 @@ function AcaraCard({ data }) {
 
 function Acara() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 py-16 bg-[var(--color-bg-accent)] text-[var(--color-text)]">
+    <SectionShell base="var(--color-bg-accent)" waveFill="var(--color-bg)">
             <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Rangkaian acara</p>
         <h2 className="font-display text-2xl mb-2">Save The Date</h2>
@@ -144,7 +167,62 @@ function Acara() {
         <AcaraCard data={weddingData.akad} />
         <AcaraCard data={weddingData.resepsi} />
       </div>
-    </section>
+    </SectionShell>
+  )
+}
+
+// ============================================
+// SECTION: AYAT SUCI (opsional)
+// ============================================
+function AyatSuci() {
+  const ayat = weddingData.ayatSuci
+  if (!ayat) return null // section otomatis hilang kalau data dikosongkan jadi null
+
+  return (
+    <SectionShell base="var(--color-bg)" waveFill="var(--color-bg-alt)">
+            <Reveal className="max-w-xl flex flex-col items-center text-center">
+        <h2 className="font-display text-xl mb-6">{ayat.title}</h2>
+        <p className="font-arabic text-2xl md:text-3xl leading-loose mb-6" dir="rtl">
+          {ayat.arabic}
+        </p>
+        <div className="w-10 h-px bg-[var(--color-accent)] opacity-50 mb-6" />
+        <p className="text-sm text-[var(--color-text-muted)] leading-relaxed mb-3">
+          "{ayat.translation}"
+        </p>
+        <p className="text-xs tracking-widest uppercase text-[var(--color-accent)]">{ayat.source}</p>
+      </Reveal>
+    </SectionShell>
+  )
+}
+
+// ============================================
+// SECTION: SUSUNAN ACARA
+// ============================================
+function SusunanAcara() {
+  return (
+    <SectionShell base="var(--color-bg-accent)" waveFill="var(--color-bg)">
+      <Reveal className="flex flex-col items-center">
+        <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Rundown</p>
+        <h2 className="font-display text-2xl mb-2">Susunan Acara</h2>
+        <Ornament />
+      </Reveal>
+
+      <div className="max-w-md w-full mt-8 relative">
+        <div className="absolute left-[52px] top-2 bottom-2 w-px bg-[var(--color-accent)] opacity-30" />
+        <div className="space-y-8">
+          {weddingData.susunanAcara.map((item, index) => (
+            <Reveal key={index} delay={index * 100} className="flex gap-4 items-start relative">
+              <div className="w-[52px] text-right text-xs text-[var(--color-accent)] pt-1 flex-shrink-0">{item.time}</div>
+              <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] mt-1.5 flex-shrink-0 relative z-10" />
+              <div>
+                <h3 className="font-display text-lg mb-1">{item.title}</h3>
+                <p className="text-sm text-[var(--color-text-muted)]">{item.description}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </SectionShell>
   )
 }
 
@@ -153,7 +231,7 @@ function Acara() {
 // ============================================
 function LoveStory() {
   return (
-        <section className="min-h-screen flex flex-col items-center justify-center px-6 py-16 bg-[var(--color-bg)] text-[var(--color-text)]">
+        <SectionShell base="var(--color-bg)" waveFill="var(--color-bg-alt)">
       <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Perjalanan cinta</p>
         <h2 className="font-display text-2xl mb-2">Love Story</h2>
@@ -171,45 +249,77 @@ function LoveStory() {
           </Reveal>
         ))}
       </div>
-    </section>
+    </SectionShell>
   )
 }
 
 // ============================================
 // SECTION: GALERI
 // ============================================
+
 function Galeri() {
-  const [selectedPhoto, setSelectedPhoto] = useState(null)
+  const [selectedMedia, setSelectedMedia] = useState(null)
+  const hasVideo = weddingData.galleryVideo?.youtubeId
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 py-16 bg-[var(--color-bg-alt)] text-[var(--color-text)]">
-            <Reveal className="flex flex-col items-center">
+    <SectionShell base="var(--color-bg-alt)" waveFill="var(--color-bg-accent)">
+      <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Momen berharga</p>
         <h2 className="font-display text-2xl mb-2">Galeri Foto</h2>
         <Ornament />
       </Reveal>
+
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-3xl w-full mt-6">
         {weddingData.gallery.map((photo, index) => (
           <Reveal key={index} delay={index * 80}>
             <img
               src={photo}
               alt={`Galeri ${index + 1}`}
-              onClick={() => setSelectedPhoto(photo)}
+              onClick={() => setSelectedMedia({ type: 'image', src: photo })}
               className="elegant-photo w-full h-40 object-cover rounded-lg cursor-pointer"
             />
           </Reveal>
         ))}
+
+        {hasVideo && (
+          <Reveal delay={weddingData.gallery.length * 80}>
+            <div
+              onClick={() => setSelectedMedia({ type: 'video', src: weddingData.galleryVideo.youtubeId })}
+              className="relative w-full h-40 rounded-lg cursor-pointer overflow-hidden"
+            >
+              <img
+                src={`https://img.youtube.com/vi/${weddingData.galleryVideo.youtubeId}/hqdefault.jpg`}
+                alt="Video"
+                className="elegant-photo w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-sm">▶</div>
+              </div>
+            </div>
+          </Reveal>
+        )}
       </div>
 
-      {selectedPhoto && (
+      {selectedMedia && (
         <div
-          onClick={() => setSelectedPhoto(null)}
+          onClick={() => setSelectedMedia(null)}
           className="fixed inset-0 bg-black/80 flex items-center justify-center p-6 z-50 cursor-pointer"
         >
-          <img src={selectedPhoto} alt="Preview" className="max-w-full max-h-full rounded-lg" />
+          {selectedMedia.type === 'image' ? (
+            <img src={selectedMedia.src} alt="Preview" className="max-w-full max-h-full rounded-lg" />
+          ) : (
+            <iframe
+              onClick={(e) => e.stopPropagation()}
+              src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1`}
+              title="Video"
+              className="w-full max-w-2xl aspect-video rounded-lg"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            />
+          )}
         </div>
       )}
-    </section>
+    </SectionShell>
   )
 }
 
@@ -220,34 +330,49 @@ function RSVP() {
   const [form, setForm] = useState({ nama: '', jumlah: 1, status: 'Hadir' })
   const [error, setError] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!form.nama.trim()) {
       setError('Nama wajib diisi')
       return
     }
     setError('')
+    setLoading(true)
+
+    const { error: submitError } = await supabase.from('rsvp').insert({
+      nama: form.nama,
+      jumlah: Number(form.jumlah),
+      status: form.status,
+    })
+
+    setLoading(false)
+
+    if (submitError) {
+      setError('Gagal mengirim, coba lagi')
+      return
+    }
     setSubmitted(true)
   }
 
   if (submitted) {
     return (
-      <section className="min-h-screen flex flex-col items-center justify-center px-6 text-center bg-[var(--color-bg-accent)] text-[var(--color-text)]">
+      <SectionShell base="var(--color-bg-accent)" waveFill="var(--color-bg)">
         <h3 className="font-display text-2xl mb-3">Terima kasih, {form.nama}!</h3>
         <p className="text-sm text-[var(--color-text-muted)]">Konfirmasi kehadiranmu sudah kami terima.</p>
-      </section>
+      </SectionShell>
     )
   }
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 py-16 bg-[var(--color-bg-accent)] text-[var(--color-text)]">
-            <Reveal className="flex flex-col items-center">
+    <SectionShell base="var(--color-bg-accent)" waveFill="var(--color-bg)" className="text-center">
+      <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Konfirmasi kehadiran</p>
         <h2 className="font-display text-2xl mb-2">RSVP</h2>
         <Ornament />
       </Reveal>
-      <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
+      <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4 mt-4">
         <div>
           <input
             type="text"
@@ -280,12 +405,13 @@ function RSVP() {
 
         <button
           type="submit"
-          className="w-full rounded-full py-3 text-sm tracking-wide hover:opacity-90 transition text-[var(--color-bg)] bg-[var(--color-dark)]"
+          disabled={loading}
+          className="w-full rounded-full py-3 text-sm tracking-wide hover:opacity-90 transition text-[var(--color-on-dark)] bg-[var(--color-dark)] disabled:opacity-50"
         >
-          Kirim Konfirmasi
+          {loading ? 'Mengirim...' : 'Kirim Konfirmasi'}
         </button>
       </form>
-    </section>
+    </SectionShell>
   )
 }
 
@@ -293,30 +419,70 @@ function RSVP() {
 // SECTION: UCAPAN & DOA
 // ============================================
 function Ucapan() {
-  const [ucapanList, setUcapanList] = useState(weddingData.initialUcapan)
+  const [ucapanList, setUcapanList] = useState([])
   const [form, setForm] = useState({ nama: '', pesan: '' })
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e) => {
+  // Ambil data awal + dengarkan data baru masuk (realtime)
+  useEffect(() => {
+    const fetchUcapan = async () => {
+      const { data } = await supabase
+        .from('ucapan')
+        .select('*')
+        .order('created_at', { ascending: false })
+      if (data) setUcapanList(data)
+    }
+    fetchUcapan()
+
+    const channel = supabase
+      .channel('ucapan-realtime')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'ucapan' },
+        (payload) => {
+          setUcapanList((current) => [payload.new, ...current])
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [])
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!form.nama.trim() || !form.pesan.trim()) {
       setError('Nama dan pesan wajib diisi')
       return
     }
     setError('')
-    setUcapanList([{ nama: form.nama, pesan: form.pesan }, ...ucapanList])
+    setLoading(true)
+
+    const { error: submitError } = await supabase
+      .from('ucapan')
+      .insert({ nama: form.nama, pesan: form.pesan })
+
+    setLoading(false)
+
+    if (submitError) {
+      setError('Gagal mengirim, coba lagi')
+      return
+    }
     setForm({ nama: '', pesan: '' })
+    // Gak perlu manual tambah ke list -- realtime listener di atas otomatis nambahin
   }
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 py-16 bg-[var(--color-bg)] text-[var(--color-text)]">
-            <Reveal className="flex flex-col items-center">
+    <SectionShell base="var(--color-bg-alt)" waveFill="var(--color-dark)">
+      <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Kirim ucapan & doa</p>
         <h2 className="font-display text-2xl mb-2">Buku Tamu</h2>
         <Ornament />
       </Reveal>
 
-      <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-3 mb-10">
+      <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-3 mb-10 mt-4">
         <input
           type="text"
           placeholder="Nama"
@@ -334,21 +500,22 @@ function Ucapan() {
         {error && <p className="text-xs text-red-600">{error}</p>}
         <button
           type="submit"
-          className="w-full rounded-full py-3 text-sm tracking-wide hover:opacity-90 transition text-[var(--color-bg)] bg-[var(--color-dark)]"
+          disabled={loading}
+          className="w-full rounded-full py-3 text-sm tracking-wide hover:opacity-90 transition text-[var(--color-on-dark)] bg-[var(--color-dark)] disabled:opacity-50"
         >
-          Kirim Ucapan
+          {loading ? 'Mengirim...' : 'Kirim Ucapan'}
         </button>
       </form>
 
       <div className="w-full max-w-sm space-y-4">
-                {ucapanList.map((item, index) => (
-          <Reveal key={index} delay={index * 80} className="border-b border-[var(--color-bg-accent)] pb-3">
+        {ucapanList.map((item) => (
+          <Reveal key={item.id} className="border-b border-[var(--color-bg-accent)] pb-3">
             <p className="font-medium text-sm">{item.nama}</p>
             <p className="text-sm text-[var(--color-text-muted)]">{item.pesan}</p>
           </Reveal>
         ))}
       </div>
-    </section>
+    </SectionShell>
   )
 }
 
@@ -404,17 +571,23 @@ function AmplopDigital() {
 // ============================================
 // FOOTER
 // ============================================
-function Footer() {
-  const [muted, setMuted] = useState(false)
 
+  function Footer({ muted, onToggleMusic }) {
   return (
-    <footer className="min-h-screen flex flex-col items-center justify-center px-6 text-center relative bg-[var(--color-dark)] text-[var(--color-bg)]">
+        <footer
+      className="min-h-screen flex flex-col items-center justify-center px-6 text-center relative overflow-hidden"
+      style={{
+        background: `radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--color-accent) 15%, transparent), transparent 50%), var(--color-dark)`,
+       
+		        color: 'var(--color-on-dark)',
+      }}
+    >
       <h2 className="font-display text-3xl mb-6">{weddingData.coupleNames}</h2>
       <p className="text-sm opacity-70 max-w-md mb-10">{weddingData.thankYouMessage}</p>
       <p className="text-xs opacity-50">Dengan penuh cinta dan doa</p>
 
-      <button
-        onClick={() => setMuted(!muted)}
+	        <button
+        onClick={onToggleMusic}
         className="absolute bottom-6 right-6 w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-xs hover:bg-white/10 transition"
         aria-label={muted ? 'Aktifkan musik' : 'Matikan musik'}
       >
@@ -424,14 +597,37 @@ function Footer() {
   )
 }
 
+function CoverPreviewSwitcher({ current, onChange }) {
+  const options = [
+    { key: 'classic', label: 'Classic' },
+    { key: 'split', label: 'Split' },
+    { key: 'portrait', label: 'Portrait' },
+  ]
+  return (
+    <div className="fixed bottom-4 left-4 z-50 flex gap-1 bg-white/90 backdrop-blur px-2 py-2 rounded-full shadow-sm text-[11px]">
+      {options.map((opt) => (
+        <button
+          key={opt.key}
+          onClick={() => onChange(opt.key)}
+          className={`px-3 py-1.5 rounded-full transition ${current === opt.key ? 'bg-black text-white' : 'text-black/60 hover:bg-black/5'}`}
+        >
+          {opt.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 // ============================================
 // APP UTAMA
 // ============================================
 function App() {
   const [opened, setOpened] = useState(false)
   const [themeKey, setThemeKey] = useState('ivoryGold')
+  const [coverVariant, setCoverVariant] = useState('classic')
+  const [muted, setMuted] = useState(false)
+  const audioRef = useRef(null)
 
-  // Setiap themeKey berubah, kita "suntik" warnanya ke CSS variable global
   useEffect(() => {
     const t = themes[themeKey]
     const root = document.documentElement
@@ -442,23 +638,49 @@ function App() {
     root.style.setProperty('--color-text-muted', t.textMuted)
     root.style.setProperty('--color-accent', t.accent)
     root.style.setProperty('--color-dark', t.dark)
+    root.style.setProperty('--color-on-dark', t.onDark)
   }, [themeKey])
+
+  const handleOpen = () => {
+    setOpened(true)
+    audioRef.current?.play().catch(() => {
+      // Kalau browser tetap menolak autoplay, gak masalah -- musik bisa dinyalakan manual lewat tombol MusicToggle
+    })
+  }
+
+  const handleToggleMusic = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !muted
+      setMuted(!muted)
+    }
+  }
 
   return (
     <div>
+      <audio ref={audioRef} src={weddingData.music.url} loop />
       <ThemeSwitcher current={themeKey} onChange={setThemeKey} />
-      {!opened && <Cover onOpen={() => setOpened(true)} />}
+      {!opened && (
+        <>
+          {coverVariant === 'classic' && <CoverClassic onOpen={handleOpen} />}
+          {coverVariant === 'split' && <CoverSplit onOpen={handleOpen} />}
+          {coverVariant === 'portrait' && <CoverPortrait onOpen={handleOpen} />}
+          <CoverPreviewSwitcher current={coverVariant} onChange={setCoverVariant} />
+        </>
+      )}
       {opened && (
         <div>
+          <AyatSuci />
           <Countdown />
           <Mempelai />
           <Acara />
+          <SusunanAcara />
           <LoveStory />
           <Galeri />
           <RSVP />
           <Ucapan />
           <AmplopDigital />
-          <Footer />
+          <Footer muted={muted} onToggleMusic={handleToggleMusic} />
+          <MusicToggle muted={muted} onToggle={handleToggleMusic} />
         </div>
       )}
     </div>
