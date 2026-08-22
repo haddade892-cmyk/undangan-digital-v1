@@ -1,6 +1,7 @@
-function SectionShell({ base, textColor = 'var(--color-text)', waveFill, bgImage, children, className = '' }) {
+function SectionShell({ id, base, textColor = 'var(--color-text)', waveFill, bgImage, children, className = '' }) {
   return (
     <section
+      id={id}
       className={`relative overflow-hidden min-h-screen flex flex-col items-center justify-center px-6 py-16 ${className}`}
       style={{ color: textColor }}
     >

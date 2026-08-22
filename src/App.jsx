@@ -9,6 +9,9 @@ import Reveal from './components/Reveal'
 import { supabase } from './lib/supabaseClient'
 import SectionShell from './components/SectionShell'
 import FrameCorners from './components/FrameCorners'
+import { Home, Users, Image, Calendar, MessageCircleHeart } from 'lucide-react'
+import CircleFrame from './components/CircleFrame'
+import ArchFrame from './components/ArchFrame'
 
 // ============================================
 // THEME SWITCHER (floating, kanan atas)
@@ -42,6 +45,43 @@ function MusicToggle({ muted, onToggle }) {
     >
       {muted ? '🔇' : '🔊'}
     </button>
+  )
+}
+
+function FloatingNav() {
+  const items = [
+    { id: null, icon: Home, label: 'Beranda' },
+    { id: 'mempelai', icon: Users, label: 'Mempelai' },
+    { id: 'acara', icon: Calendar, label: 'Acara' },
+    { id: 'galeri', icon: Image, label: 'Galeri' },
+    { id: 'rsvp', icon: MessageCircleHeart, label: 'RSVP' },
+  ]
+
+    const handleClick = (id) => {
+    if (!id) {
+      document.getElementById('app-frame')?.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  return (
+    <div
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-1 px-2 py-2 rounded-full shadow-md"
+      style={{ background: 'var(--color-dark)' }}
+    >
+      {items.map((item) => (
+        <button
+          key={item.label}
+          onClick={() => handleClick(item.id)}
+          aria-label={item.label}
+          className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-white/10 transition"
+          style={{ color: 'var(--color-on-dark)' }}
+        >
+          <item.icon size={16} />
+        </button>
+      ))}
+    </div>
   )
 }
 
@@ -105,15 +145,15 @@ function Mempelai() {
   const { groom, bride } = weddingData
 
   return (
-	<SectionShell base="var(--color-bg)" waveFill="var(--color-bg-accent)">
+	<SectionShell id="mempelai" base="var(--color-bg)" waveFill="var(--color-bg-accent)">
             <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Mempelai</p>
         <h2 className="font-display text-2xl mb-2">Dengan Rahmat Allah</h2>
         <Ornament />
       </Reveal>
-      <div className="flex flex-col md:flex-row gap-12 items-center mt-4">
+	  <div className="flex flex-col gap-10 items-center w-full">
         <div className="text-center max-w-xs">
-		  <img src={groom.photo} alt={groom.fullName} className="elegant-photo w-40 h-40 rounded-full object-cover mx-auto mb-4" />
+		  <div className="mb-4"><ArchFrame src={groom.photo} alt={groom.fullName} /></div>
           <h3 className="font-display text-2xl">{groom.fullName}</h3>
           <p className="text-sm mt-2 text-[var(--color-text-muted)]">{groom.parents}</p>
           <p className="text-sm mt-1">@{groom.instagram}</p>
@@ -122,8 +162,8 @@ function Mempelai() {
         <div className="font-display text-3xl text-[var(--color-accent)]">&</div>
 
         <div className="text-center max-w-xs">
-		  <img src={groom.photo} alt={groom.fullName} className="elegant-photo w-40 h-40 rounded-full object-cover mx-auto mb-4" />
-          <h3 className="font-display text-2xl">{bride.fullName}</h3>
+          <div className="mb-4"><ArchFrame src={bride.photo} alt={bride.fullName} /></div>
+		  <h3 className="font-display text-2xl">{bride.fullName}</h3>
           <p className="text-sm mt-2 text-[var(--color-text-muted)]">{bride.parents}</p>
           <p className="text-sm mt-1">@{bride.instagram}</p>
         </div>
@@ -137,7 +177,7 @@ function Mempelai() {
 // ============================================
 function AcaraCard({ data }) {
   return (
-    <div className="bg-[var(--color-bg)] rounded-xl p-8 max-w-sm text-center shadow-sm">
+	  <div className="bg-[var(--color-bg)] rounded-xl p-6 w-full max-w-xs text-center shadow-sm">
       <p className="text-xs tracking-widest uppercase mb-2 text-[var(--color-accent)]">{data.label}</p>
       <p className="font-display text-lg mb-1">{data.date}</p>
       <p className="text-sm mb-4">{data.time}</p>
@@ -157,13 +197,13 @@ function AcaraCard({ data }) {
 
 function Acara() {
   return (
-    <SectionShell base="var(--color-bg-accent)" waveFill="var(--color-bg)">
+    <SectionShell id="acara"base="var(--color-bg-accent)" waveFill="var(--color-bg)">
             <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Rangkaian acara</p>
         <h2 className="font-display text-2xl mb-2">Save The Date</h2>
         <Ornament />
       </Reveal>
-      <div className="flex flex-col md:flex-row gap-6">
+	    <div className="flex flex-col gap-4 items-center w-full">
         <AcaraCard data={weddingData.akad} />
         <AcaraCard data={weddingData.resepsi} />
       </div>
@@ -180,8 +220,13 @@ function AyatSuci() {
 
   return (
     <SectionShell base="var(--color-bg)" waveFill="var(--color-bg-alt)">
-            <Reveal className="max-w-xl flex flex-col items-center text-center">
+        <Reveal className="max-w-xl flex flex-col items-center text-center">
         <h2 className="font-display text-xl mb-6">{ayat.title}</h2>
+        {ayat.photo && (
+          <div className="mb-8">
+            <CircleFrame src={ayat.photo} alt={weddingData.coupleNames} />
+          </div>
+        )}
         <p className="font-arabic text-2xl md:text-3xl leading-loose mb-6" dir="rtl">
           {ayat.arabic}
         </p>
@@ -239,9 +284,9 @@ function LoveStory() {
       </Reveal>
       <div className="max-w-2xl w-full space-y-10 mt-6">
         {weddingData.loveStory.map((moment, index) => (
-          <Reveal key={index} delay={index * 100} className="flex flex-col md:flex-row gap-6 items-center">
-            <img src={moment.photo} alt={moment.title} className="elegant-photo w-full md:w-52 h-40 object-cover rounded-lg flex-shrink-0" />
-            <div className="text-center md:text-left">
+            <Reveal key={index} delay={index * 100} className="flex flex-col gap-4 items-center">
+            <img src={moment.photo} alt={moment.title} className="elegant-photo w-full h-40 object-cover rounded-lg flex-shrink-0" />
+            <div className="text-center">
               <p className="text-xs tracking-widest uppercase text-[var(--color-accent)] mb-1">{moment.date}</p>
               <h3 className="font-display text-xl mb-2">{moment.title}</h3>
               <p className="text-sm text-[var(--color-text-muted)]">{moment.description}</p>
@@ -262,14 +307,15 @@ function Galeri() {
   const hasVideo = weddingData.galleryVideo?.youtubeId
 
   return (
-    <SectionShell base="var(--color-bg-alt)" waveFill="var(--color-bg-accent)">
+    <SectionShell id="galeri" base="var(--color-bg-alt)" waveFill="var(--color-bg-accent)">
       <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Momen berharga</p>
         <h2 className="font-display text-2xl mb-2">Galeri Foto</h2>
         <Ornament />
       </Reveal>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-3xl w-full mt-6">
+      
+	  <div className="grid grid-cols-2 gap-3 w-full mt-6">
         {weddingData.gallery.map((photo, index) => (
           <Reveal key={index} delay={index * 80}>
             <img
@@ -366,7 +412,7 @@ function RSVP() {
   }
 
   return (
-    <SectionShell base="var(--color-bg-accent)" waveFill="var(--color-bg)" className="text-center">
+    <SectionShell id="rvsp" base="var(--color-bg-accent)" waveFill="var(--color-bg)" className="text-center">
       <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Konfirmasi kehadiran</p>
         <h2 className="font-display text-2xl mb-2">RSVP</h2>
@@ -655,33 +701,51 @@ function App() {
     }
   }
 
-  return (
-    <div>
-      <audio ref={audioRef} src={weddingData.music.url} loop />
+      return (
+    <div className="h-screen w-full flex justify-center items-start overflow-hidden" style={{ background: '#e8e5e0' }}>
+      <div
+		id="app-frame"
+        className="relative w-full max-w-[480px] shadow-2xl"
+        style={{
+          height: '100vh',
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          background: 'var(--color-bg)',
+        }}
+      >
+        <audio ref={audioRef} src={weddingData.music.url} loop />
+        {!opened && (
+          <>
+            {coverVariant === 'classic' && <CoverClassic onOpen={handleOpen} />}
+            {coverVariant === 'split' && <CoverSplit onOpen={handleOpen} />}
+            {coverVariant === 'portrait' && <CoverPortrait onOpen={handleOpen} />}
+            <CoverPreviewSwitcher current={coverVariant} onChange={setCoverVariant} />
+          </>
+        )}
+        {opened && (
+          <div>
+            <AyatSuci />
+            <Countdown />
+            <Mempelai />
+            <Acara />
+            <SusunanAcara />
+            <LoveStory />
+            <Galeri />
+            <RSVP />
+            <Ucapan />
+            <AmplopDigital />
+            <Footer muted={muted} onToggleMusic={handleToggleMusic} />
+          </div>
+        )}
+      </div>
+
+      {/* Elemen floating ditaruh di luar bingkai scroll, bukan di dalamnya */}
       <ThemeSwitcher current={themeKey} onChange={setThemeKey} />
-      {!opened && (
-        <>
-          {coverVariant === 'classic' && <CoverClassic onOpen={handleOpen} />}
-          {coverVariant === 'split' && <CoverSplit onOpen={handleOpen} />}
-          {coverVariant === 'portrait' && <CoverPortrait onOpen={handleOpen} />}
-          <CoverPreviewSwitcher current={coverVariant} onChange={setCoverVariant} />
-        </>
-      )}
       {opened && (
-        <div>
-          <AyatSuci />
-          <Countdown />
-          <Mempelai />
-          <Acara />
-          <SusunanAcara />
-          <LoveStory />
-          <Galeri />
-          <RSVP />
-          <Ucapan />
-          <AmplopDigital />
-          <Footer muted={muted} onToggleMusic={handleToggleMusic} />
+        <>
           <MusicToggle muted={muted} onToggle={handleToggleMusic} />
-        </div>
+          <FloatingNav />
+        </>
       )}
     </div>
   )

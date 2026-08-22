@@ -1,6 +1,6 @@
 const weddingData = {
-  coupleNames: "Andi & Siti",
-  weddingDate: "2026-12-20T08:00:00",
+  coupleNames: "Hariadi Hamdan, & Asti Kusuma A.Idham",
+  weddingDate: "2026-09-12T08:09:00",
   defaultGuestLabel: "Tamu Undangan",
 
   
@@ -12,17 +12,17 @@ const weddingData = {
   },
 
   groom: {
-    name: "Andi",
-    fullName: "Andi Pratama, S.Kom",
-    parents: "Putra dari Bapak Sutrisno & Ibu Wulandari",
-    instagram: "andi.pratama",
+    name: "Adi",
+    fullName: "Hariadi Hamdan,S.Pd",
+    parents: "Putra Tunggal Ibu Itang & Bapak Arifin (Alm)",
+    instagram: "adi",
     photo: "/images/1.jpg",
   },
   bride: {
-    name: "Siti",
-    fullName: "Siti Nurhaliza, S.E",
-    parents: "Putri dari Bapak Hasan & Ibu Ratna",
-    instagram: "siti.nurhaliza",
+    name: "Asti",
+    fullName: "Asti Kusuma A.Idham, Amd.Kep",
+    parents: "Putri Bapak A.Idham A.Dauda,S.Sos & Ibu Rosmawati.M",
+    instagram: "Asti",
     photo: "/images/1.jpg",
   },
   
@@ -68,8 +68,10 @@ const weddingData = {
   },
   
     // Kosongkan jadi `null` kalau bukan pernikahan Islam / gak mau pakai ayat suci
-  ayatSuci: {
-	title: "The Wedding Of Andi & Siti",
+  
+    ayatSuci: {
+    title: "The Wedding Of Andi & Siti",
+    photo: "https://picsum.photos/seed/couple-portrait/500/500", // kosongkan "" kalau gak mau pakai foto
     arabic: "وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً",
     translation: "Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa cinta dan kasih sayang.",
     source: "QS. Ar-Rum: 21",
@@ -96,18 +98,18 @@ const weddingData = {
 
   akad: {
     label: "Akad Nikah",
-    date: "Minggu, 20 Desember 2026",
+    date: "Sabtu, 12 September 2026",
     time: "08.00 WITA - Selesai",
-    venue: "Masjid Agung Soppeng",
-    address: "Jl. Merdeka No. 10, Watansoppeng",
+    venue: "Rumah Mempelai",
+    address: "Rumpa'E,Kel.Macanre,Kab.Soppeng",
     mapsUrl: "https://maps.google.com",
   },
   resepsi: {
     label: "Resepsi",
-    date: "Minggu, 20 Desember 2026",
-    time: "11.00 - 14.00 WITA",
-    venue: "Gedung Serbaguna Soppeng",
-    address: "Jl. Pahlawan No. 5, Watansoppeng",
+    date: "Sabtu, 12 September 2026",
+    time: "09.00 - Selesai",
+    venue: "Rumah Mempelai",
+    address: "Rumpa'E,Kel.Macanre,Kab.Soppeng",
     mapsUrl: "https://maps.google.com",
   },
     music: {

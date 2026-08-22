@@ -13,12 +13,12 @@ function CoverSplit({ onOpen }) {
   }, [])
 
   return (
-    <div className={`min-h-screen flex flex-col md:flex-row transition-opacity duration-1000 ${visible ? 'opacity-100' : 'opacity-0'}`}>
-      <div className="relative w-full md:w-1/2 h-[45vh] md:h-screen overflow-hidden">
+	  <div className={`min-h-screen flex flex-col transition-opacity duration-1000 ${visible ? 'opacity-100' : 'opacity-0'}`}>
+      <div className="relative w-full h-[45vh] overflow-hidden">
         <img src={weddingData.cover.preweddingPhoto} alt="" className="elegant-photo absolute inset-0 w-full h-full object-cover" />
       </div>
       <div
-        className="w-full md:w-1/2 flex-1 flex flex-col items-center justify-center px-8 py-16 text-center"
+        className="w-full flex-1 flex flex-col items-center justify-center px-8 py-16 text-center"
         style={{ background: 'var(--color-dark)', color: 'var(--color-on-dark)' }}
       >
         <p className="text-xs tracking-[0.3em] uppercase mb-6 opacity-70">The Wedding Of</p>
