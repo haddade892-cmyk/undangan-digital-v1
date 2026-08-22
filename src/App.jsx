@@ -14,7 +14,7 @@ import CircleFrame from './components/CircleFrame'
 import ArchFrame from './components/ArchFrame'
 
 // ============================================
-// THEME SWITCHER (floating, kanan atas)
+// THEME SWITCHER (floating, kanan atas )
 // ============================================
 function ThemeSwitcher({ current, onChange }) {
   return (

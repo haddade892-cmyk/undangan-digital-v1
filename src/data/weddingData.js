@@ -1,5 +1,5 @@
 const weddingData = {
-  coupleNames: "Hariadi Hamdan, & Asti Kusuma A.Idham",
+  coupleNames: "Adi, & Asti",
   weddingDate: "2026-09-12T08:09:00",
   defaultGuestLabel: "Tamu Undangan",
 
@@ -70,7 +70,7 @@ const weddingData = {
     // Kosongkan jadi `null` kalau bukan pernikahan Islam / gak mau pakai ayat suci
   
     ayatSuci: {
-    title: "The Wedding Of Andi & Siti",
+    title: "The Wedding Of Adi & Asti",
     photo: "https://picsum.photos/seed/couple-portrait/500/500", // kosongkan "" kalau gak mau pakai foto
     arabic: "وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً",
     translation: "Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan untukmu dari jenismu sendiri, agar kamu merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa cinta dan kasih sayang.",
