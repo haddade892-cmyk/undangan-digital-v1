@@ -6,9 +6,9 @@ const weddingData = {
   
     cover: {
     backgroundType: "image",
-    backgroundImage: "https://picsum.photos/seed/wedding-cover/800/1200",
+    backgroundImage: "images/cover3.png",
     backgroundVideo: "",
-    preweddingPhoto: "https://picsum.photos/seed/prewedding-1/700/900",
+    preweddingPhoto: "images/1.jpg",
     greeting: "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara kami.",
   },
 
