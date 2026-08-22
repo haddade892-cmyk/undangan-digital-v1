@@ -412,7 +412,7 @@ function RSVP() {
   }
 
   return (
-    <SectionShell id="rvsp" base="var(--color-bg-accent)" waveFill="var(--color-bg)" className="text-center">
+    <SectionShell id="rsvp" base="var(--color-bg-accent)" waveFill="var(--color-bg)" className="text-center">
       <Reveal className="flex flex-col items-center">
         <p className="text-xs tracking-[0.3em] uppercase mb-2 text-[var(--color-accent)]">Konfirmasi kehadiran</p>
         <h2 className="font-display text-2xl mb-2">RSVP</h2>

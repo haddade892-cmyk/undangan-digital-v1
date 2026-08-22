@@ -1,5 +1,5 @@
 const weddingData = {
-  coupleNames: "Adi, & Asti",
+  coupleNames: "Adi & Asti",
   weddingDate: "2026-09-12T08:09:00",
   defaultGuestLabel: "Tamu Undangan",
 
