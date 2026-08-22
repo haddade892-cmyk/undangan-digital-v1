@@ -12,6 +12,7 @@ import FrameCorners from './components/FrameCorners'
 import { Home, Users, Image, Calendar, MessageCircleHeart } from 'lucide-react'
 import CircleFrame from './components/CircleFrame'
 import ArchFrame from './components/ArchFrame'
+import CoverFloral from './components/covers/CoverFloral'
 
 // ============================================
 // THEME SWITCHER (floating, kanan atas )
@@ -648,6 +649,7 @@ function CoverPreviewSwitcher({ current, onChange }) {
     { key: 'classic', label: 'Classic' },
     { key: 'split', label: 'Split' },
     { key: 'portrait', label: 'Portrait' },
+	{ key: 'floral', label: 'Floral' },
   ]
   return (
     <div className="fixed bottom-4 left-4 z-50 flex gap-1 bg-white/90 backdrop-blur px-2 py-2 rounded-full shadow-sm text-[11px]">
@@ -719,6 +721,7 @@ function App() {
             {coverVariant === 'classic' && <CoverClassic onOpen={handleOpen} />}
             {coverVariant === 'split' && <CoverSplit onOpen={handleOpen} />}
             {coverVariant === 'portrait' && <CoverPortrait onOpen={handleOpen} />}
+			{coverVariant === 'floral' && <CoverFloral onOpen={handleOpen} />}
             <CoverPreviewSwitcher current={coverVariant} onChange={setCoverVariant} />
           </>
         )}

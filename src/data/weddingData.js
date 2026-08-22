@@ -5,10 +5,11 @@ const weddingData = {
 
   
     cover: {
-    backgroundType: "image", // ganti ke "video" kalau mau pakai video
-    backgroundImage: "images/cover3.png",
-    backgroundVideo: "", // isi link .mp4 kalau backgroundType = "video"
-    preweddingPhoto: "images/4.jpg",
+    backgroundType: "image",
+    backgroundImage: "https://picsum.photos/seed/wedding-cover/800/1200",
+    backgroundVideo: "",
+    preweddingPhoto: "https://picsum.photos/seed/prewedding-1/700/900",
+    greeting: "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara kami.",
   },
 
   groom: {

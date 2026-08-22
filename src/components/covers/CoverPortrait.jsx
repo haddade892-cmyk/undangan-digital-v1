@@ -18,8 +18,8 @@ function CoverPortrait({ onOpen }) {
       <CoverBackground />
       <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.75) 100%)' }} />
       <div className="relative z-10 transition-all duration-1000" style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(16px)' }}>
-        <p className="text-xs tracking-[0.3em] uppercase mb-6">The Wedding Of</p>
-		<h1 className="font-display text-4xl mb-1">{weddingData.groom.name} & {weddingData.bride.name}</h1>
+        <p className="text-xs tracking-[0.3em] uppercase mb-3">The Wedding Of</p>
+		<h1 className="font-display text-4xl mb-3">{weddingData.groom.name} & {weddingData.bride.name}</h1>
 		<p className="text-xs tracking-widest uppercase mb-1">Kepada Yth</p>
         <p className="text-xs tracking-widest uppercase mb-6 opacity-80">{guestName}</p>
         <button onClick={onOpen} className="border border-white/70 rounded-full px-7 py-2.5 text-xs tracking-[0.2em] uppercase hover:bg-white/10 transition">
