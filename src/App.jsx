@@ -705,7 +705,7 @@ function App() {
     <div className="h-screen w-full flex justify-center items-start overflow-hidden" style={{ background: '#e8e5e0' }}>
       <div
 		id="app-frame"
-        className="relative w-full max-w-[480px] shadow-2xl"
+		className="relative w-full md:max-w-2xl lg:max-w-[480px] shadow-2xl"
         style={{
           height: '100vh',
           overflowY: 'auto',
