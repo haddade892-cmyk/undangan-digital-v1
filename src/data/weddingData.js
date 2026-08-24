@@ -91,9 +91,9 @@ const weddingData = {
   ],
   
     bankAccounts: [
-    { bank: "BCA", nomor: "1234567890", atasNama: "Andi Pratama" },
-    { bank: "Mandiri", nomor: "0987654321", atasNama: "Siti Nurhaliza" },
-  ],
+    { bank: "Mandiri", nomor: "1700019062466", atasNama: "" },
+    { bank: "Dana", nomor: "082197321182", atasNama: "" },
+  ],co
 
   thankYouMessage: "Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.",
 
@@ -111,7 +111,7 @@ const weddingData = {
     time: "09.00 - Selesai",
     venue: "Rumah Mempelai",
     address: "Rumpa'E,Kel.Macanre,Kab.Soppeng",
-    mapsUrl: "https://maps.google.com",
+    mapsUrl: "https://maps.app.goo.gl/rRAfv76ntnJCxNmZ8",
   },
     music: {
     url: "/audio/music.mp3",
