@@ -6,7 +6,7 @@ const weddingData = {
   
     cover: {
     backgroundType: "image",
-    backgroundImage: "images/cover3.png",
+    backgroundImage: "images/BGcoverwedding.webp",
     backgroundVideo: "",
     preweddingPhoto: "images/1.jpg",
     greeting: "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara/i untuk hadir di acara kami.",

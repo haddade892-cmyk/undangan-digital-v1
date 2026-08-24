@@ -13,14 +13,19 @@ import { Home, Users, Image, Calendar, MessageCircleHeart } from 'lucide-react'
 import CircleFrame from './components/CircleFrame'
 import ArchFrame from './components/ArchFrame'
 import CoverFloral from './components/covers/CoverFloral'
+import CoverHybrid from './components/covers/CoverHybrid'
 
 // ============================================
 // THEME SWITCHER (floating, kanan atas )
 // ============================================
+const ACTIVE_THEME_KEYS = ['onyxGold', 'noirGoldDeluxe', 'charcoalLuxe', 'charcoalSilver']
+
 function ThemeSwitcher({ current, onChange }) {
   return (
     <div className="fixed top-4 right-4 z-50 flex gap-2 bg-white/80 backdrop-blur px-3 py-2 rounded-full shadow-sm">
-      {Object.entries(themes).map(([key, t]) => (
+      {Object.entries(themes)
+        .filter(([key]) => ACTIVE_THEME_KEYS.includes(key))
+        .map(([key, t]) => (
         <button
           key={key}
           onClick={() => onChange(key)}
@@ -645,11 +650,12 @@ function AmplopDigital() {
 }
 
 function CoverPreviewSwitcher({ current, onChange }) {
-  const options = [
+    const options = [
     { key: 'classic', label: 'Classic' },
     { key: 'split', label: 'Split' },
     { key: 'portrait', label: 'Portrait' },
-	{ key: 'floral', label: 'Floral' },
+    { key: 'floral', label: 'Floral' },
+    { key: 'hybrid', label: 'Hybrid' },
   ]
   return (
     <div className="fixed bottom-4 left-4 z-50 flex gap-1 bg-white/90 backdrop-blur px-2 py-2 rounded-full shadow-sm text-[11px]">
@@ -671,8 +677,8 @@ function CoverPreviewSwitcher({ current, onChange }) {
 // ============================================
 function App() {
   const [opened, setOpened] = useState(false)
-  const [themeKey, setThemeKey] = useState('ivoryGold')
-  const [coverVariant, setCoverVariant] = useState('classic')
+  const [themeKey, setThemeKey] = useState('onyxGold')
+  const [coverVariant, setCoverVariant] = useState('hybrid')
   const [muted, setMuted] = useState(false)
   const audioRef = useRef(null)
 
@@ -722,7 +728,8 @@ function App() {
             {coverVariant === 'split' && <CoverSplit onOpen={handleOpen} />}
             {coverVariant === 'portrait' && <CoverPortrait onOpen={handleOpen} />}
 			{coverVariant === 'floral' && <CoverFloral onOpen={handleOpen} />}
-            <CoverPreviewSwitcher current={coverVariant} onChange={setCoverVariant} />
+			{coverVariant === 'hybrid' && <CoverHybrid onOpen={handleOpen} />}
+ {/*           <CoverPreviewSwitcher current={coverVariant} onChange={setCoverVariant} /> */}
           </>
         )}
         {opened && (

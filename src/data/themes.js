@@ -67,15 +67,16 @@ const themes = {
   },
     onyxGold: {
     label: "Onyx Gold",
-    bg: "#1a1815",
-    bgAlt: "#242019",
-    bgAccent: "#100e0c",
+    bg: "#0d0d0d",
+    bgAlt: "#161616",
+    bgAccent: "#050505",
     text: "#f7f0e0",
     textMuted: "#c9bfa8",
     accent: "#d4af6a",
-    dark: "#0a0908",
+    dark: "#000000",
     onDark: "#f7f0e0",
   },
+  
   noirGoldDeluxe: {
     label: "Noir Gold Deluxe",
     bg: "#221c17",
