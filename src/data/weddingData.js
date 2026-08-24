@@ -29,25 +29,25 @@ const weddingData = {
   
     loveStory: [
     {
-      date: "Januari 2020",
+      date: "2019",
       title: "Pertama Bertemu",
-      description: "Dipertemukan di sebuah acara kampus, obrolan singkat yang berlanjut jadi pertemanan.",
+      description: "dipertemukan di sosial media percakapan singkat menjadi awal dari kisah singkat.",
       photo: "/images/2.jpg",
     },
     {
-      date: "Juni 2022",
+      date: "Desember 2019",
       title: "Menjalin Hubungan",
-      description: "Setelah dua tahun saling mengenal, kami memutuskan untuk melangkah lebih serius.",
+      description: "Menjalin hubungan setelah  saling mengenal lebih dekat, kami memutuskan untuk melangkah bersama dalam sebuah hubungan.",
       photo: "/images/5.jpg",
     },
     {
-      date: "Maret 2025",
+      date: "Juli 2026",
       title: "Lamaran",
-      description: "Di hadapan keluarga besar, janji untuk melangkah ke jenjang berikutnya resmi terucap.",
+      description: "Lamaran dihadapan keluarga tercinta, sebuah janji sebagai diucapkan sebagai langkah menuju prnikahan.",
       photo: "/images/3.jpg",
     },
     {
-      date: "Desember 2026",
+      date: "September 2026",
       title: "Hari Bahagia",
       description: "Hari yang telah dinantikan, saat kami resmi menjadi satu.",
       photo: "/images/6.jpg",
@@ -81,8 +81,8 @@ const weddingData = {
   susunanAcara: [
     { time: "08.00 WITA", title: "Persiapan & Kedatangan Tamu", description: "Pengantin dan keluarga bersiap-siap menyambut tamu undangan." },
     { time: "10.00 WITA", title: "Akad Nikah", description: "Pembukaan, pembacaan ayat suci, ijab kabul, dan doa." },
-    { time: "11.00 WITA", title: "Resepsi Pernikahan", description: "Sambutan keluarga, hiburan, dan foto bersama." },
-    { time: "14.00 WITA", title: "Acara Selesai", description: "Terima kasih atas kehadiran dan doa restunya." },
+    { time: "13.00 WITA", title: "Resepsi Pernikahan", description: "Sambutan keluarga, hiburan, dan foto bersama." },
+    { time: "17.30 WITA", title: "Acara Selesai", description: "Terima kasih atas kehadiran dan doa restunya." },
   ],
 
   initialUcapan: [
@@ -101,9 +101,9 @@ const weddingData = {
     label: "Akad Nikah",
     date: "Sabtu, 12 September 2026",
     time: "08.00 WITA - Selesai",
-    venue: "Rumah Mempelai",
-    address: "Rumpa'E,Kel.Macanre,Kab.Soppeng",
-    mapsUrl: "https://maps.google.com",
+    venue: "Kediaman Mempelai Wanita",
+    address: "Jln.Permandian Ompo(Depan Warung Jen'k Idha)",
+    mapsUrl: "https://maps.app.goo.gl/NM51moPeCoDzS54H8",
   },
   resepsi: {
     label: "Resepsi",
