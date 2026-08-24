@@ -65,6 +65,28 @@ const themes = {
     dark: "#0a0a0d",
     onDark: "#f5f5f3",
   },
+    onyxGold: {
+    label: "Onyx Gold",
+    bg: "#0d0d0d",
+    bgAlt: "#161616",
+    bgAccent: "#050505",
+    text: "#f7f0e0",
+    textMuted: "#c9bfa8",
+    accent: "#d4af6a",
+    dark: "#000000",
+    onDark: "#f7f0e0",
+  },
+  noirGoldDeluxe: {
+    label: "Noir Gold Deluxe",
+    bg: "#1a1512",
+    bgAlt: "#241d18",
+    bgAccent: "#120e0b",
+    text: "#efe6d8",
+    textMuted: "#b8a98f",
+    accent: "#b8925a",
+    dark: "#0a0806",
+    onDark: "#efe6d8",
+  },
 }
 
 export default themes
